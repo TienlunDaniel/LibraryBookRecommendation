@@ -13,6 +13,13 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.librarybookrecommendation.Util.getUrlHtml
+import com.example.librarybookrecommendation.Util.kingStoneSeedLink
+import com.example.librarybookrecommendation.model.Book
+import com.example.librarybookrecommendation.onlineBookStore.KingStone
+import com.example.librarybookrecommendation.onlineBookStore.OnlineBookStore
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +45,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        //test
+        GlobalScope.launch {
+            val book : Book = OnlineBookStore.getOnlineStore(kingStoneSeedLink).getBook()
+            book
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
