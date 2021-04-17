@@ -48,7 +48,7 @@ abstract class BaseDao<T> {
     abstract fun delete(obj: T)
 
     @Transaction
-    fun upsert(obj: T) {
+    open fun upsert(obj: T) {
         val id = insert(obj)
         if (id == -1L) {
             update(obj)
@@ -56,7 +56,7 @@ abstract class BaseDao<T> {
     }
 
     @Transaction
-    fun upsert(objList: List<T>) {
+    open fun upsert(objList: List<T>) {
         val insertResult = insert(objList)
         val updateList: MutableList<T> = ArrayList()
         for (i in insertResult.indices) {

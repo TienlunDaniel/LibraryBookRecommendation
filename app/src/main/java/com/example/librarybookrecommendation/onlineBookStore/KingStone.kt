@@ -2,6 +2,7 @@ package com.example.librarybookrecommendation.onlineBookStore
 
 import com.example.librarybookrecommendation.Util.*
 import com.example.librarybookrecommendation.model.Book
+import com.example.librarybookrecommendation.model.BookToScrape
 import com.example.librarybookrecommendation.model.EmptyBook
 import org.jsoup.nodes.Document
 
@@ -11,8 +12,8 @@ class KingStone(override val url: String) :
     override val storeName: String
         get() = "KingStone"
 
-    override fun getBook(): Book {
-        val doc: Document = getUrlHtml(url) ?: return EmptyBook
+    override fun getBookAndFollowingLinks(): Pair<Book, List<BookToScrape>> {
+        val doc: Document = getUrlHtml(url) ?: return Pair(EmptyBook, listOf())
 
         val json = doc.getElementsByTag("meta")
             .first { it.attr("name") == "description" }.attr("content")
@@ -29,22 +30,18 @@ class KingStone(override val url: String) :
                         "$kingStoneImageRegex.*$productID.*"
             ).map { it.attr("href") }
 
-        val urlsToFollow = doc.getElementsByAttributeValueMatching(
-            "href",
-            "$kingStoneBookRegex.*\\d+.*"
-        ).map { it.attr("href") }
-
         val similarText = getUrlHtml("$kingStoneSimilarBase$productID")?.text()!!
         val complementText = getUrlHtml("$kingStoneComplementary$productID")?.text()!!
 
         val similarLink = processProductID(similarText)
         val complementLink = processProductID(complementText)
 
-        val followLinks = similarLink.toMutableSet()
-        followLinks.addAll(complementLink)
-
         var categories = doc.getElementsMatchingText("商品分類").last().text().split("＞")
         categories = categories.subList(1, categories.lastIndex)
+
+        val followLinks = similarLink.toMutableSet()
+        followLinks.addAll(complementLink)
+        val bookToScrapeList = followLinks.map { BookToScrape(it, url, categories) }
 
         val book: Book =
             Book(
@@ -60,7 +57,7 @@ class KingStone(override val url: String) :
                 similarLink,
                 complementLink
             )
-        return book
+        return Pair(book, bookToScrapeList)
     }
 
     private fun processProductID(rawText: String): List<String> {
