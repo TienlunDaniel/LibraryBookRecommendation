@@ -20,7 +20,7 @@ object BookDispatcherService {
         GlobalScope.launch {
             val bookDao = db.bookDao()
             val bookToScrapeDao = db.bookToScrapeDao()
-            val coroutineNumber = 5
+            val coroutineNumber = 20
 
             while (true){
                 /*general looper- unscraped links with default */
@@ -44,14 +44,15 @@ object BookDispatcherService {
 
             //store into persistence data storage with room
             bookDao.insert(bookWithLibrary)
-            val bookToScrapeUpdated = bookToScrape.copy(scraped = true)
-            bookToScrapeDao.update(bookToScrapeUpdated)
             bookToScrapeDao.insert(links)
 
             //log to see monitor the process
             Log.d(scrappingProcessLog, book.toString())
         }catch (e : Exception){
             Log.d(scrappingProcessLog, "${bookToScrape.toString()} ${e.message}")
+        }finally {
+            val bookToScrapeUpdated = bookToScrape.copy(scraped = true)
+            bookToScrapeDao.update(bookToScrapeUpdated)
         }
     }
 }

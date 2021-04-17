@@ -9,6 +9,7 @@ import android.webkit.WebViewClient
 import androidx.room.Room
 import com.example.librarybookrecommendation.database.AppDatabase
 import com.example.librarybookrecommendation.service.BookDispatcherService
+import com.example.librarybookrecommendation.service.DownloadLibraryISBNService
 
 
 class LibraryBookApplication : Application() {
@@ -18,6 +19,8 @@ class LibraryBookApplication : Application() {
         ctx = this
         bookDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "BookDatabase")
             .fallbackToDestructiveMigration().build()
+
+        DownloadLibraryISBNService.newTaipeiCityISBNDownload(ctx as Context)
         BookDispatcherService.launchDownloadingService(bookDatabase as AppDatabase)
     }
 

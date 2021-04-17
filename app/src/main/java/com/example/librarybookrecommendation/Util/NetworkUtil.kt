@@ -20,7 +20,7 @@ var handler: Handler? = null
 
 
 fun getUrlHtml(url: String): Document? {
-    val doc = Jsoup.connect(url).ignoreContentType(true).get()
+    val doc = Jsoup.connect(url).userAgent(RandomUserAgent.getRandomUserAgent()).ignoreContentType(true).get()
     return doc
 }
 
