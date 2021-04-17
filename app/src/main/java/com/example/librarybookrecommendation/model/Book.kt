@@ -1,9 +1,10 @@
 package com.example.librarybookrecommendation.model
 
 import androidx.room.*
+import com.example.librarybookrecommendation.database.BaseDao
 import com.example.librarybookrecommendation.database.BookConverter
 
-val EmptyBook = Book("", "", "", "", "", listOf(), listOf(), listOf(), listOf(), listOf())
+val EmptyBook = Book("", "", "", "", "", listOf(), listOf(), listOf(), listOf(), listOf(), listOf())
 
 @Entity
 data class Book(
@@ -14,19 +15,17 @@ data class Book(
     val storeName: List<String>,
     val images: List<String>,
     val libraries: List<String>,
-    val relatedBooksLinks: List<String>
+    val contentBasedLinks: List<String>,
+    val collaborativeLinks: List<String>
 )
 
 @Dao
-interface BookDao {
+abstract class BookDao : BaseDao<Book>() {
 
     @Query("SELECT * FROM Book")
-    fun getAll(): List<Book>
+    abstract fun getAll(): List<Book>
 
-    @Insert
-    fun insertAll(vararg books: Book)
-
-    @Delete
-    fun delete(book: Book)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun insertAll(vararg books: Book)
 }
 

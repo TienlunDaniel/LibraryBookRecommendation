@@ -37,11 +37,14 @@ class KingStone(override val url: String) :
         val similarText = getUrlHtml("$kingStoneSimilarBase$productID")?.text()!!
         val complementText = getUrlHtml("$kingStoneComplementary$productID")?.text()!!
 
-        val similarLink = processProductID(similarText).toMutableSet()
+        val similarLink = processProductID(similarText)
         val complementLink = processProductID(complementText)
 
         val followLinks = similarLink.toMutableSet()
         followLinks.addAll(complementLink)
+
+        var categories = doc.getElementsMatchingText("商品分類").last().text().split("＞")
+        categories = categories.subList(1, categories.lastIndex)
 
         val book: Book =
             Book(
@@ -50,11 +53,12 @@ class KingStone(override val url: String) :
                 author,
                 description,
                 releaseDate,
-                listOf(),
+                categories,
                 listOf(storeName),
                 images,
                 listOf(),
-                followLinks.toList()
+                similarLink,
+                complementLink
             )
         return book
     }
