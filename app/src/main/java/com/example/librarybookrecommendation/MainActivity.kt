@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             val book : Book = OnlineBookStore.getOnlineStore(kingStoneSeedLink).getBook()
             book
+//            val bookDao = LibraryBookApplication.bookDatabase!!.bookDao()
+//            bookDao.insertAll(book)
+//
+//            val temp = bookDao.getAll()
+//            temp
         }
     }
 

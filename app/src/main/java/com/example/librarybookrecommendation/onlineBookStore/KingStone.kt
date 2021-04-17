@@ -40,11 +40,22 @@ class KingStone(override val url: String) :
         val similarLink = processProductID(similarText).toMutableSet()
         val complementLink = processProductID(complementText)
 
-        val followLinks  = similarLink.toMutableSet()
+        val followLinks = similarLink.toMutableSet()
         followLinks.addAll(complementLink)
 
         val book: Book =
-            Book(isbn, title, author, description, releaseDate, listOf(storeName), images, null, followLinks.toList())
+            Book(
+                isbn,
+                title,
+                author,
+                description,
+                releaseDate,
+                listOf(),
+                listOf(storeName),
+                images,
+                listOf(),
+                followLinks.toList()
+            )
         return book
     }
 
