@@ -18,10 +18,16 @@ import kotlin.coroutines.Continuation
 import kotlin.coroutines.suspendCoroutine
 
 var browsers: MutableMap<String, WebView> = ConcurrentHashMap()
-var handler : Handler? = null
+var handler: Handler? = null
+
+
+fun getUrlHtml(url: String): Document? {
+    val doc = Jsoup.connect(url).ignoreContentType(true).get()
+    return doc
+}
 
 suspend fun getUrlHtmlWithCoroutine(key: String, url: String): Document? {
-    if(handler == null)
+    if (handler == null)
         handler = Handler(Looper.getMainLooper())
 
     return suspendCoroutine { cont ->
@@ -31,7 +37,7 @@ suspend fun getUrlHtmlWithCoroutine(key: String, url: String): Document? {
                 val doc = Jsoup.parse(it)
                 cont.resumeWith(Result.success(doc))
             }) { browsers[key]?.loadUrl(url) }
-        else{
+        else {
             browsers[key]?.loadUrl(url)
         }
     }
@@ -51,7 +57,7 @@ fun getBrowserInstance(key: String, htmlCB: (String) -> Unit, postCompletion: ()
             override fun onPageFinished(view: WebView, url: String) {
                 /* This call inject JavaScript into the page which just finished loading. */
                 GlobalScope.launch {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         delay(10000)
                         browser.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');")
                     }

@@ -2,7 +2,6 @@ package com.example.librarybookrecommendation
 
 import android.os.Bundle
 import android.view.Menu
-import android.webkit.WebView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -14,10 +13,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.librarybookrecommendation.Util.getUrlHtmlWithCoroutine
 import com.example.librarybookrecommendation.Util.kingStoneSeedLink
 import com.example.librarybookrecommendation.model.Book
-import com.example.librarybookrecommendation.onlineBookStore.KingStone
 import com.example.librarybookrecommendation.onlineBookStore.OnlineBookStore
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

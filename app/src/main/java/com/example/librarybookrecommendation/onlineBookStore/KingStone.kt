@@ -1,8 +1,6 @@
 package com.example.librarybookrecommendation.onlineBookStore
 
-import com.example.librarybookrecommendation.Util.getUrlHtmlWithCoroutine
-import com.example.librarybookrecommendation.Util.kingStoneBookRegex
-import com.example.librarybookrecommendation.Util.kingStoneImageRegex
+import com.example.librarybookrecommendation.Util.*
 import com.example.librarybookrecommendation.model.Book
 import com.example.librarybookrecommendation.model.EmptyBook
 import org.jsoup.nodes.Document
@@ -13,8 +11,8 @@ class KingStone(override val url: String) :
     override val storeName: String
         get() = "KingStone"
 
-    override suspend fun getBook(): Book {
-        val doc: Document = getUrlHtmlWithCoroutine(storeName, url) ?: return EmptyBook
+    override fun getBook(): Book {
+        val doc: Document = getUrlHtml(url) ?: return EmptyBook
 
         val json = doc.getElementsByTag("meta")
             .first { it.attr("name") == "description" }.attr("content")
@@ -36,9 +34,23 @@ class KingStone(override val url: String) :
             "$kingStoneBookRegex.*\\d+.*"
         ).map { it.attr("href") }
 
+        val similarText = getUrlHtml("$kingStoneSimilarBase$productID")?.text()!!
+        val complementText = getUrlHtml("$kingStoneComplementary$productID")?.text()!!
+
+        val similarLink = processProductID(similarText).toMutableSet()
+        val complementLink = processProductID(complementText)
+
+        val followLinks  = similarLink.toMutableSet()
+        followLinks.addAll(complementLink)
+
         val book: Book =
-            Book(isbn, title, author, description, releaseDate, listOf(storeName), images, null)
+            Book(isbn, title, author, description, releaseDate, listOf(storeName), images, null, followLinks.toList())
         return book
+    }
+
+    private fun processProductID(rawText: String): List<String> {
+        return rawText.substring(rawText.indexOf("[") + 1, rawText.indexOf("]")).split(",")
+            .map { "$kingStoneBookRegex${it.substring(1, it.length - 1)}" }
     }
 }
 
