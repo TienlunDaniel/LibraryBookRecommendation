@@ -9,18 +9,21 @@ import kotlinx.coroutines.launch
 
 object DownloadLibraryISBNService {
 
-    fun newTaipeiCityISBNDownload(context: Context){
-        val sharedPref = context.getSharedPreferences(NewTaipeiLibrary.sharedPrefKey, Context.MODE_PRIVATE) ?: return
+    fun newTaipeiCityISBNDownload(context: Context) {
+        val sharedPref =
+            context.getSharedPreferences(NewTaipeiLibrary.sharedPrefKey, Context.MODE_PRIVATE)
+                ?: return
 
         GlobalScope.launch {
             val pageNumber = sharedPref.getInt(NewTaipeiLibrary.pageNumberKey, 1)
             val downloadISBNUrl = getNewTaipeiISBNPage(pageNumber = pageNumber.toString())
 
             val html = getUrlHtml(downloadISBNUrl)
-            val temp = html?.getElementsMatchingText("^ISBN/ISSN:(\\d{10}|\\d{13})$")?.map { it.text() }
+            val temp = html!!.getElementsMatchingText("^ISBN/ISSN:(\\d{10}|\\d{13})$")
+                .map { it.text() }.map { it.substring(it.indexOf(":") + 1) }
 
 
-            with (sharedPref.edit()) {
+            with(sharedPref.edit()) {
                 putInt(NewTaipeiLibrary.pageNumberKey, pageNumber + 1)
                 commit()
             }
