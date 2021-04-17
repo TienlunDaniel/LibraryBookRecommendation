@@ -10,6 +10,8 @@ val kingStoneSimilarBase =
 val kingStoneComplementary =
     "https://recommendation.api.useinsider.com/10002708/zh_tw/complementary/product/"
 
+val scrappingProcessLog = "scrappingProcessLog"
+
 fun getNewTaipeiPage(isbn: String): String {
     return "https://webpac.tphcc.gov.tw/webpac/search.cfm?m=ss&k0=$isbn&t0=k&c0=and&cat0=&dt0=&l0=&lv0=&lc0=&y10=&y20="
 }

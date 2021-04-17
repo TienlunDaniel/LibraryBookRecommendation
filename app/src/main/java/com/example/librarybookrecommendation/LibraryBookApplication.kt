@@ -16,7 +16,8 @@ class LibraryBookApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         ctx = this
-        bookDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "BookDatabase").build()
+        bookDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "BookDatabase")
+            .fallbackToDestructiveMigration().build()
         BookDispatcherService.launchDownloadingService(bookDatabase as AppDatabase)
     }
 

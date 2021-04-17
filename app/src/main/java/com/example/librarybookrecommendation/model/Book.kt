@@ -24,8 +24,5 @@ abstract class BookDao : BaseDao<Book>() {
 
     @Query("SELECT * FROM Book")
     abstract fun getAll(): List<Book>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insertAll(vararg books: Book)
 }
 
