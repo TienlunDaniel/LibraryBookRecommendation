@@ -20,7 +20,7 @@ class LibraryBookApplication : Application() {
         bookDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "BookDatabase")
             .fallbackToDestructiveMigration().build()
 
-        DownloadLibraryISBNService.newTaipeiCityISBNDownload(ctx as Context)
+        DownloadLibraryISBNService.newTaipeiCityISBNDownload(ctx as Context, bookDatabase as AppDatabase)
         BookDispatcherService.launchDownloadingService(bookDatabase as AppDatabase)
     }
 

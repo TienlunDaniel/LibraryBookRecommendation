@@ -7,15 +7,12 @@ import androidx.room.Query
 import com.example.librarybookrecommendation.Util.kingStoneSeedLinkInLibrary
 import com.example.librarybookrecommendation.database.BaseDao
 
-val EmptyBookToScrape = BookToScrape(kingStoneSeedLinkInLibrary, "", listOf(), false)
-
 @Entity
 data class BookToScrape(
     @PrimaryKey
-    val link: String,
-    val fromLink : String,
-    val fromCategories: List<String>,
-    val scraped: Boolean = false
+    val ISBN: String,
+    val scraped: Boolean = false,
+    val completed : Boolean = false
 )
 
 @Dao

@@ -41,7 +41,7 @@ class KingStone(override val url: String) :
 
         val followLinks = similarLink.toMutableSet()
         followLinks.addAll(complementLink)
-        val bookToScrapeList = followLinks.map { BookToScrape(it, url, categories) }
+        val bookToScrapeList = followLinks.map { BookToScrape(it) }
 
         val book: Book =
             Book(

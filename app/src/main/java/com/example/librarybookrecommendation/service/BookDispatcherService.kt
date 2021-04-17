@@ -17,42 +17,42 @@ import java.lang.Exception
 
 object BookDispatcherService {
     fun launchDownloadingService(db: AppDatabase) {
-        GlobalScope.launch {
-            val bookDao = db.bookDao()
-            val bookToScrapeDao = db.bookToScrapeDao()
-            val coroutineNumber = 20
-
-            while (true){
-                /*general looper- unscraped links with default */
-                var listToScrape = bookToScrapeDao.getUnscraped(coroutineNumber)
-                if (listToScrape.isEmpty())
-                    listToScrape = listOf(EmptyBookToScrape)
-
-                val asyncList = listToScrape.map { async { processBook(it, bookDao, bookToScrapeDao) } }
-
-                awaitAll(*asyncList.toTypedArray())
-            }
-        }
+//        GlobalScope.launch {
+//            val bookDao = db.bookDao()
+//            val bookToScrapeDao = db.bookToScrapeDao()
+//            val coroutineNumber = 20
+//
+//            while (true){
+//                /*general looper- unscraped links with default */
+//                var listToScrape = bookToScrapeDao.getUnscraped(coroutineNumber)
+//                if (listToScrape.isEmpty())
+//                    listToScrape = listOf()
+//
+//                val asyncList = listToScrape.map { async { processBook(it, bookDao, bookToScrapeDao) } }
+//
+//                awaitAll(*asyncList.toTypedArray())
+//            }
+//        }
     }
 
     private fun processBook(bookToScrape: BookToScrape, bookDao: BookDao, bookToScrapeDao: BookToScrapeDao){
-        try{
-            // get book and assign library to the book
-            val (book, links) = OnlineBookStore.getOnlineStore(bookToScrape.link)
-                .getBookAndFollowingLinks()
-            val bookWithLibrary = book.copy(libraries = containingLibrary(isbn = book.ISBN))
-
-            //store into persistence data storage with room
-            bookDao.insert(bookWithLibrary)
-            bookToScrapeDao.insert(links)
-
-            //log to see monitor the process
-            Log.d(scrappingProcessLog, book.toString())
-        }catch (e : Exception){
-            Log.d(scrappingProcessLog, "${bookToScrape.toString()} ${e.message}")
-        }finally {
-            val bookToScrapeUpdated = bookToScrape.copy(scraped = true)
-            bookToScrapeDao.update(bookToScrapeUpdated)
-        }
+//        try{
+//            // get book and assign library to the book
+//            val (book, links) = OnlineBookStore.getOnlineStore(bookToScrape.link)
+//                .getBookAndFollowingLinks()
+//            val bookWithLibrary = book.copy(libraries = containingLibrary(isbn = book.ISBN))
+//
+//            //store into persistence data storage with room
+//            bookDao.insert(bookWithLibrary)
+//            bookToScrapeDao.insert(links)
+//
+//            //log to see monitor the process
+//            Log.d(scrappingProcessLog, book.toString())
+//        }catch (e : Exception){
+//            Log.d(scrappingProcessLog, "${bookToScrape.toString()} ${e.message}")
+//        }finally {
+//            val bookToScrapeUpdated = bookToScrape.copy(scraped = true)
+//            bookToScrapeDao.update(bookToScrapeUpdated)
+//        }
     }
 }
