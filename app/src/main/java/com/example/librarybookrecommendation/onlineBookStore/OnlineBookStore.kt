@@ -6,7 +6,7 @@ import java.lang.RuntimeException
 
 abstract class OnlineBookStore(open val url: String){
     abstract val storeName: String
-    abstract fun getBook(): Book
+    abstract suspend fun getBook(): Book
 
     companion object {
         fun getOnlineStore(url: String) : OnlineBookStore{

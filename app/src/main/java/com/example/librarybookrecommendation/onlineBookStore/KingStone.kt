@@ -1,6 +1,6 @@
 package com.example.librarybookrecommendation.onlineBookStore
 
-import com.example.librarybookrecommendation.Util.getUrlHtml
+import com.example.librarybookrecommendation.Util.getUrlHtmlWithCoroutine
 import com.example.librarybookrecommendation.Util.kingStoneBookRegex
 import com.example.librarybookrecommendation.Util.kingStoneImageRegex
 import com.example.librarybookrecommendation.model.Book
@@ -13,8 +13,8 @@ class KingStone(override val url: String) :
     override val storeName: String
         get() = "KingStone"
 
-    override fun getBook(): Book {
-        val doc: Document = getUrlHtml(url) ?: return EmptyBook
+    override suspend fun getBook(): Book {
+        val doc: Document = getUrlHtmlWithCoroutine(storeName, url) ?: return EmptyBook
 
         val json = doc.getElementsByTag("meta")
             .first { it.attr("name") == "description" }.attr("content")

@@ -14,7 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.librarybookrecommendation.Util.getUrlHtml
+import com.example.librarybookrecommendation.Util.getUrlHtmlWithCoroutine
 import com.example.librarybookrecommendation.Util.kingStoneSeedLink
 import com.example.librarybookrecommendation.model.Book
 import com.example.librarybookrecommendation.onlineBookStore.KingStone
