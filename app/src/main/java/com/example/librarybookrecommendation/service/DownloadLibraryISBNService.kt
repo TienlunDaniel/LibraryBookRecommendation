@@ -38,7 +38,10 @@ object DownloadLibraryISBNService {
                 val unscrapedPages = entry.unScrapedPage.toMutableList()
                 val scrapedPages = entry.scrapedPage.toMutableList()
 
-                val limitPages = unscrapedPages.subList(0, numberOfCorountine)
+                val limitPages = unscrapedPages.subList(
+                    0, if (unscrapedPages.size > numberOfCorountine)
+                        numberOfCorountine else unscrapedPages.size
+                )
 
                 if (unscrapedPages.isNullOrEmpty())
                     break
