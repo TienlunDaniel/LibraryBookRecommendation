@@ -24,6 +24,7 @@ import com.example.librarybookrecommendation.ui.adapter.BookGridAdapter
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    var bookList = listOf<Book>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -56,10 +57,13 @@ class HomeFragment : Fragment() {
         })
 
         homeViewModel.bookList.observe(viewLifecycleOwner, Observer {
+            bookList = it
             bookGridAdapter.setData(it)
         })
 
-        homeViewModel.refreshBooks()
+        if(bookList.isEmpty()){
+            homeViewModel.refreshBooks()
+        }
 
         return root
     }
