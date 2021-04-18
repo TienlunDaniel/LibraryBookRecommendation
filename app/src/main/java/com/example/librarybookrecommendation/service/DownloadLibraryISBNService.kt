@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.librarybookrecommendation.Util.getNewTaipeiISBNPage
 import com.example.librarybookrecommendation.Util.getUrlHtml
-import com.example.librarybookrecommendation.Util.scrappingProcessLog
+import com.example.librarybookrecommendation.Util.scrappingLog
 import com.example.librarybookrecommendation.database.AppDatabase
 import com.example.librarybookrecommendation.model.BookToScrape
 import com.example.librarybookrecommendation.model.ISBNPageToScrape
@@ -14,11 +14,13 @@ import java.lang.Exception
 
 object DownloadLibraryISBNService {
 
+    private val logKey = scrappingLog + "ISBNService"
+
     fun newTaipeiCityISBNDownload(context: Context, appDatabase: AppDatabase) {
         val bookToScrapeDao = appDatabase.bookToScrapeDao()
         val isbnPageToScrapeDao = appDatabase.isbnPageToScrapeDao()
         val totalPages = 5877
-        val numberOfCorountine = 10
+        val numberOfCorountine = 5
 
         GlobalScope.launch {
             while (true) {
@@ -35,7 +37,7 @@ object DownloadLibraryISBNService {
                         )
                     else rows[0]
 
-                Log.d(scrappingProcessLog, "isbnPageToScrapeDao ${bookToScrapeDao.getCount()}")
+                Log.d(logKey, "BookToScrape Number: ${bookToScrapeDao.getCount()}")
 
                 val unscrapedPages = entry.unScrapedPage.toMutableList()
                 val scrapedPages = entry.scrapedPage.toMutableList()
@@ -65,9 +67,7 @@ object DownloadLibraryISBNService {
                             bookToScrapeDao.insertAll(ISBNs)
                             scrapedPages.add(unscraped)
                             unscrapedPages.remove(unscraped)
-                            Log.d(scrappingProcessLog, "$unscraped $ISBNs")
                         } catch (e: Exception) {
-                            Log.d(scrappingProcessLog, unscraped + " " + e.message)
                         }
                         return@async
                     })

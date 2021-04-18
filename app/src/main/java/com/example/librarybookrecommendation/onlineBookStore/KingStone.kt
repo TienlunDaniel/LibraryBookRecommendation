@@ -13,19 +13,17 @@ class KingStone :
         get() = "KingStone"
 
     override fun isbnBookUrlMapping(isbn: String): String {
-        val tempISBN = "9789869828826"
-        val searchResult = getUrlHtml(getKingStoneSearchPage(tempISBN)) ?: return ""
+        val searchResult = getUrlHtml(getKingStoneSearchPage(isbn)) ?: return ""
 
-        if (searchResult.getElementsMatchingText("找不到與.*$tempISBN.*有關的結果").size > 0)
+        if (searchResult.getElementsMatchingText("找不到與.*$isbn.*有關的結果").size > 0)
             return ""
         else {
             val elements = searchResult.getElementsByAttributeValueMatching(
                 "href",
-                "/basic/\\d+?.*kw=$tempISBN"
+                "/basic/\\d+?.*kw=$isbn"
             )
             if (elements.size > 0) {
-                val unformattedUrl = searchResult
-                    .getElementsByAttributeValueMatching("href", "/basic/\\d+?.*kw=$tempISBN")[0]
+                val unformattedUrl = elements[0]
                     .attr("href")
 
                 val appendedString = unformattedUrl.substring(0 , unformattedUrl.indexOf("?"))

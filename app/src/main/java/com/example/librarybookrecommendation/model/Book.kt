@@ -24,5 +24,8 @@ abstract class BookDao : BaseDao<Book>() {
 
     @Query("SELECT * FROM Book")
     abstract fun getAll(): List<Book>
+
+    @Query("SELECT COUNT(*) FROM Book")
+    abstract fun getCount(): Int
 }
 

@@ -17,7 +17,7 @@ abstract class OnlineBookStore{
     companion object {
         fun getOnlineStore(choice: OnlineStoreChoice = OnlineStoreChoice.KINGSTONE) : OnlineBookStore{
             if(choice == OnlineStoreChoice.KINGSTONE){
-                return KingStone();
+                return KingStone()
             }
 
             throw RuntimeException("Invalid Url for online book store")
