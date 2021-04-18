@@ -14,6 +14,9 @@ val kingStoneSearchPage = "https://www.kingstone.com.tw/search/search?q="
 
 val scrappingLog = "scrappingLog"
 
+val newTaipeiPackageName = "gov.tphcc.library"
+val newTaiepiClassName = "io.dcloud.PandoraEntry"
+
 fun getNewTaipeiISBNPage(pageNumber: String): String {
     return "https://webpac.tphcc.gov.tw/webpac/search.cfm?m=as&k0=*&t0=t&c0=and&y10=&y20=&cat0=&dt0=&l0=&lv0=&lc0=&mt=&at=&sj=&py=&pr=&it=&lr=&lg=&list_num=100&current_page=$pageNumber&si=2&view=d"
 }
