@@ -1,5 +1,7 @@
 package com.example.librarybookrecommendation.ui.home
 
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.librarybookrecommendation.R
 import com.example.librarybookrecommendation.ui.adapter.BookGridAdapter
+
 
 class HomeFragment : Fragment() {
 
@@ -47,6 +50,13 @@ class HomeFragment : Fragment() {
         })
 
         homeViewModel.refreshBooks()
+
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.component = ComponentName(
+            "gov.tphcc.library",
+            "io.dcloud.PandoraEntry"
+        )
+        startActivity(intent)
 
         return root
     }
