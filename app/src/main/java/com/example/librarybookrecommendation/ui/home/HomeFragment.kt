@@ -10,12 +10,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.librarybookrecommendation.R
 import com.example.librarybookrecommendation.Util.isPackageInstalled
 import com.example.librarybookrecommendation.Util.newTaipeiPackageName
+import com.example.librarybookrecommendation.model.Book
 import com.example.librarybookrecommendation.ui.adapter.BookGridAdapter
 
 
@@ -47,6 +49,12 @@ class HomeFragment : Fragment() {
         bookRecyclerView.layoutManager = GridLayoutManager(context, 4)
         val bookGridAdapter = BookGridAdapter(context, listOf())
         bookRecyclerView.adapter = bookGridAdapter
+        bookGridAdapter.setClickListener(object : BookGridAdapter.ItemClickListener{
+            override fun onItemClick(view: View?, position: Int, book: Book) {
+                findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment)
+            }
+        })
+
         homeViewModel.bookList.observe(viewLifecycleOwner, Observer {
             bookGridAdapter.setData(it)
         })

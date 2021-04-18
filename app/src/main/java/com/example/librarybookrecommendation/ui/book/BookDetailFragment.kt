@@ -25,7 +25,7 @@ class BookDetailFragment : Fragment() {
     ): View? {
         bookViewModel =
             ViewModelProviders.of(this).get(BookViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_book_detail, container, false)
 
         return root
     }

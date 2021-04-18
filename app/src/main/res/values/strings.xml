@@ -11,4 +11,5 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="book_title">Book Info</string>
+    <string name="newTaipeiLibraryText">新北市立圖書館</string>
 </resources>

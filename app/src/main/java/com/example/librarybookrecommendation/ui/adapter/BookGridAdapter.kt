@@ -61,7 +61,7 @@ class BookGridAdapter internal constructor(
         var bookInfo: TextView = itemView.findViewById(R.id.book_info)
         var bookPicture: ImageView = itemView.findViewById(R.id.book_picture)
         override fun onClick(view: View?) {
-            mClickListener?.onItemClick(view, adapterPosition)
+            mClickListener?.onItemClick(view, adapterPosition, mData[adapterPosition])
         }
 
         init {
@@ -86,6 +86,6 @@ class BookGridAdapter internal constructor(
 
     // parent activity will implement this method to respond to click events
     interface ItemClickListener {
-        fun onItemClick(view: View?, position: Int)
+        fun onItemClick(view: View?, position: Int, book: Book)
     }
 }
