@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.librarybookrecommendation.R
+import com.example.librarybookrecommendation.ui.adapter.BookGridAdapter
 
 class HomeFragment : Fragment() {
 
@@ -26,6 +29,16 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        val bookRecyclerView = root.findViewById<RecyclerView>(R.id.book_grid)
+        bookRecyclerView.layoutManager = GridLayoutManager(context, 6)
+        val bookGridAdapter = BookGridAdapter(context, listOf())
+        bookRecyclerView.adapter = bookGridAdapter
+        homeViewModel.bookList.observe(viewLifecycleOwner, Observer {
+            bookGridAdapter.setData(it)
+        })
+        homeViewModel.refreshBooks()
+
         return root
     }
 }
