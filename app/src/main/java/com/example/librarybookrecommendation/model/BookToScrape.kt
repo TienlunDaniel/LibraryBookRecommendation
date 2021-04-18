@@ -20,4 +20,10 @@ abstract class BookToScrapeDao : BaseDao<BookToScrape>() {
 
     @Query("SELECT * FROM BookToScrape WHERE scraped = 0 LIMIT :num")
     abstract fun getUnscraped(num: Int): List<BookToScrape>
+
+    @Query("SELECT * FROM BookToScrape WHERE completed = 0 AND scraped = 1 LIMIT :num")
+    abstract fun getUncompleted(num: Int): List<BookToScrape>
+
+    @Query("SELECT COUNT(*) FROM BookToScrape")
+    abstract fun getCount(): Int
 }

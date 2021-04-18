@@ -17,10 +17,16 @@ import java.lang.Exception
 
 object BookDispatcherService {
     fun launchDownloadingService(db: AppDatabase) {
-//        GlobalScope.launch {
-//            val bookDao = db.bookDao()
-//            val bookToScrapeDao = db.bookToScrapeDao()
-//            val coroutineNumber = 20
+        GlobalScope.launch {
+            val bookDao = db.bookDao()
+            val bookToScrapeDao = db.bookToScrapeDao()
+            val coroutineNumber = 10
+            val defaultOnlineStore = OnlineBookStore.getOnlineStore()
+
+            val bookToScrapeList = bookToScrapeDao.getUnscraped(coroutineNumber)
+
+
+
 //
 //            while (true){
 //                /*general looper- unscraped links with default */
@@ -32,10 +38,14 @@ object BookDispatcherService {
 //
 //                awaitAll(*asyncList.toTypedArray())
 //            }
-//        }
+        }
     }
 
-    private fun processBook(bookToScrape: BookToScrape, bookDao: BookDao, bookToScrapeDao: BookToScrapeDao){
+    private fun processBook(
+        bookToScrape: BookToScrape,
+        bookDao: BookDao,
+        bookToScrapeDao: BookToScrapeDao
+    ) {
 //        try{
 //            // get book and assign library to the book
 //            val (book, links) = OnlineBookStore.getOnlineStore(bookToScrape.link)

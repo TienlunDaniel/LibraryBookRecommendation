@@ -5,14 +5,19 @@ import com.example.librarybookrecommendation.model.Book
 import com.example.librarybookrecommendation.model.BookToScrape
 import java.lang.RuntimeException
 
-abstract class OnlineBookStore(open val url: String){
+enum class OnlineStoreChoice{
+    KINGSTONE
+}
+
+abstract class OnlineBookStore{
     abstract val storeName: String
-    abstract fun getBookAndFollowingLinks(): Pair<Book, List<BookToScrape>>
+    abstract fun getBookAndFollowingLinks(url : String): Pair<Book, List<BookToScrape>>
+    abstract fun isbnBookUrlMapping(isbn : String): String
 
     companion object {
-        fun getOnlineStore(url: String) : OnlineBookStore{
-            if(url.contains(kingStoneStoreRegex)){
-                return KingStone(url);
+        fun getOnlineStore(choice: OnlineStoreChoice = OnlineStoreChoice.KINGSTONE) : OnlineBookStore{
+            if(choice == OnlineStoreChoice.KINGSTONE){
+                return KingStone();
             }
 
             throw RuntimeException("Invalid Url for online book store")

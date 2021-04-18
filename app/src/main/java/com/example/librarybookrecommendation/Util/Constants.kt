@@ -1,5 +1,6 @@
 package com.example.librarybookrecommendation.Util
 
+val kingStoneStoreBaseUrl = "https://www.kingstone.com.tw"
 val kingStoneStoreRegex = "www.kingstone.com.tw"
 val kingStoneSeedLink = "https://www.kingstone.com.tw/basic/2011760339994"
 val kingStoneSeedLinkInLibrary = "https://www.kingstone.com.tw/basic/2011771286638"
@@ -9,6 +10,7 @@ val kingStoneSimilarBase =
     "https://recommendation.api.useinsider.com/10002708/zh_tw/similar/product/"
 val kingStoneComplementary =
     "https://recommendation.api.useinsider.com/10002708/zh_tw/complementary/product/"
+val kingStoneSearchPage = "https://www.kingstone.com.tw/search/search?q="
 
 val scrappingProcessLog = "scrappingProcessLog"
 
@@ -19,3 +21,8 @@ fun getNewTaipeiISBNPage(pageNumber: String): String {
 fun getNewTaipeiPage(isbn: String): String {
     return "https://webpac.tphcc.gov.tw/webpac/search.cfm?m=ss&k0=$isbn&t0=k&c0=and&cat0=&dt0=&l0=&lv0=&lc0=&y10=&y20="
 }
+
+fun getKingStoneSearchPage(isbn: String): String {
+    return kingStoneSearchPage + isbn
+}
+

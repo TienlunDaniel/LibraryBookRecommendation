@@ -35,6 +35,8 @@ object DownloadLibraryISBNService {
                         )
                     else rows[0]
 
+                Log.d(scrappingProcessLog, "isbnPageToScrapeDao ${bookToScrapeDao.getCount()}")
+
                 val unscrapedPages = entry.unScrapedPage.toMutableList()
                 val scrapedPages = entry.scrapedPage.toMutableList()
 

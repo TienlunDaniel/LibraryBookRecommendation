@@ -6,13 +6,37 @@ import com.example.librarybookrecommendation.model.BookToScrape
 import com.example.librarybookrecommendation.model.EmptyBook
 import org.jsoup.nodes.Document
 
-class KingStone(override val url: String) :
-    OnlineBookStore(url) {
+class KingStone :
+    OnlineBookStore() {
 
     override val storeName: String
         get() = "KingStone"
 
-    override fun getBookAndFollowingLinks(): Pair<Book, List<BookToScrape>> {
+    override fun isbnBookUrlMapping(isbn: String): String {
+        val tempISBN = "9789869828826"
+        val searchResult = getUrlHtml(getKingStoneSearchPage(tempISBN)) ?: return ""
+
+        if (searchResult.getElementsMatchingText("找不到與.*$tempISBN.*有關的結果").size > 0)
+            return ""
+        else {
+            val elements = searchResult.getElementsByAttributeValueMatching(
+                "href",
+                "/basic/\\d+?.*kw=$tempISBN"
+            )
+            if (elements.size > 0) {
+                val unformattedUrl = searchResult
+                    .getElementsByAttributeValueMatching("href", "/basic/\\d+?.*kw=$tempISBN")[0]
+                    .attr("href")
+
+                val appendedString = unformattedUrl.substring(0 , unformattedUrl.indexOf("?"))
+                return kingStoneStoreBaseUrl + appendedString
+            }
+        }
+
+        return ""
+    }
+
+    override fun getBookAndFollowingLinks(url: String): Pair<Book, List<BookToScrape>> {
         val doc: Document = getUrlHtml(url) ?: return Pair(EmptyBook, listOf())
 
         val json = doc.getElementsByTag("meta")
