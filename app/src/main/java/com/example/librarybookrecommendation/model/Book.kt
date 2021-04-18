@@ -28,7 +28,7 @@ abstract class BookDao : BaseDao<Book>() {
     @Query("SELECT COUNT(*) FROM Book")
     abstract fun getCount(): Int
 
-    @Query("SELECT * FROM Book LIMIT :num")
+    @Query("SELECT * FROM Book ORDER BY RANDOM() LIMIT :num")
     abstract fun getBooks(num : Int): List<Book>
 }
 

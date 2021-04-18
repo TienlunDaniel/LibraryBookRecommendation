@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.librarybookrecommendation.R
 import com.example.librarybookrecommendation.ui.adapter.BookGridAdapter
 
@@ -30,13 +31,21 @@ class HomeFragment : Fragment() {
             textView.text = it
         })
 
+        val bookRefreshLayout = root.findViewById<SwipeRefreshLayout>(R.id.bookRefreshLayout)
+        bookRefreshLayout.setOnRefreshListener {
+            homeViewModel.refreshBooks{
+                bookRefreshLayout.isRefreshing = false
+            }
+        }
+
         val bookRecyclerView = root.findViewById<RecyclerView>(R.id.book_grid)
-        bookRecyclerView.layoutManager = GridLayoutManager(context, 6)
+        bookRecyclerView.layoutManager = GridLayoutManager(context, 4)
         val bookGridAdapter = BookGridAdapter(context, listOf())
         bookRecyclerView.adapter = bookGridAdapter
         homeViewModel.bookList.observe(viewLifecycleOwner, Observer {
             bookGridAdapter.setData(it)
         })
+
         homeViewModel.refreshBooks()
 
         return root

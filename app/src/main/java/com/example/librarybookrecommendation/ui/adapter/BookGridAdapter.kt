@@ -28,6 +28,7 @@ class BookGridAdapter internal constructor(
         viewType: Int
     ): ViewHolder {
         val view: View = mInflater.inflate(R.layout.book_item, parent, false)
+        view.layoutParams = ViewGroup.LayoutParams(parent.measuredWidth / 4, parent.measuredHeight / 4)
         return ViewHolder(view)
     }
 

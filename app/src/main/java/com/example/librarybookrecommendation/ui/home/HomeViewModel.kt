@@ -22,12 +22,13 @@ class HomeViewModel : ViewModel() {
     val text: LiveData<String> = _text
     val bookList: MutableLiveData<List<Book>> = MutableLiveData()
 
-    fun refreshBooks() {
+    fun refreshBooks(postCompletion: () -> Unit = {}) {
         val bookDao = LibraryBookApplication.bookDatabase!!.bookDao()
 
         GlobalScope.launch {
             val books = bookDao.getBooks(500)
             bookList.postValue(books)
+            postCompletion()
         }
     }
 }
