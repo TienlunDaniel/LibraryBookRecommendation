@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.librarybookrecommendation.R
+import com.example.librarybookrecommendation.Util.bookKey
+import com.example.librarybookrecommendation.Util.getApp
 import com.example.librarybookrecommendation.Util.isPackageInstalled
 import com.example.librarybookrecommendation.Util.newTaipeiPackageName
 import com.example.librarybookrecommendation.model.Book
@@ -52,7 +54,8 @@ class HomeFragment : Fragment() {
         bookRecyclerView.adapter = bookGridAdapter
         bookGridAdapter.setClickListener(object : BookGridAdapter.ItemClickListener{
             override fun onItemClick(view: View?, position: Int, book: Book) {
-                findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment)
+                findNavController().navigate(R.id.action_nav_home_to_bookDetailFragment,
+                    Bundle().apply { putSerializable(bookKey, book) })
             }
         })
 

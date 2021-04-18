@@ -3,6 +3,7 @@ package com.example.librarybookrecommendation.model
 import androidx.room.*
 import com.example.librarybookrecommendation.database.BaseDao
 import com.example.librarybookrecommendation.database.BookConverter
+import java.io.Serializable
 
 val EmptyBook = Book("", "", "", "", "", listOf(), listOf(), listOf(), listOf(), listOf(), listOf())
 
@@ -17,7 +18,7 @@ data class Book(
     val libraries: List<String>,
     val contentBasedLinks: List<String>,
     val collaborativeLinks: List<String>
-)
+) : Serializable
 
 @Dao
 abstract class BookDao : BaseDao<Book>() {

@@ -15,39 +15,47 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/displayImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:src="@drawable/ic_launcher_foreground"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/thumbnailImages"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/displayImage" />
 
             <TextView
                 android:id="@+id/book_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="TextView"
+                android:text="book info"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="35sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/thumbnailImages" />
 
             <TextView
                 android:id="@+id/book_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="TextView"
+                android:textSize="20sp"
+                android:text="book description"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_info" />
+                app:layout_constraintTop_toBottomOf="@+id/book_info"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/libraryEntry"
@@ -56,7 +64,8 @@
                 android:background="#fff5b6"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/book_description">
+                app:layout_constraintTop_toBottomOf="@+id/book_description"
+                android:layout_marginVertical="30dp">
 
                 <TextView
                     android:id="@+id/library"
