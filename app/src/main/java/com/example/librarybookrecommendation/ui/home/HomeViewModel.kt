@@ -21,6 +21,9 @@ class HomeViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
     val bookList: MutableLiveData<List<Book>> = MutableLiveData()
+    val bookDownloadedCount: LiveData<Int>? by lazy {
+        LibraryBookApplication.bookDatabase?.bookDao()?.getCountLiveData()
+    }
 
     fun refreshBooks(postCompletion: () -> Unit = {}) {
         val bookDao = LibraryBookApplication.bookDatabase!!.bookDao()

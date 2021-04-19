@@ -37,7 +37,7 @@ class BookDetailFragment : Fragment() {
 
         val book: Book = requireArguments().getSerializable(bookKey) as Book
 
-        root.book_info.text = "${book.title}\n${book.author}\n${book.releaseDate}"
+        root.book_info.text = "${book.title}\n${book.author}\n${book.releaseDate}\n類別: ${book.categories.joinToString(" -> ")}"
         root.book_description.text = book.description
 
         root.libraryEntry.setOnClickListener {

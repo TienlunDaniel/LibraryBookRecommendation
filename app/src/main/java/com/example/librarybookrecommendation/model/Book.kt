@@ -1,5 +1,6 @@
 package com.example.librarybookrecommendation.model
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.librarybookrecommendation.database.BaseDao
 import com.example.librarybookrecommendation.database.BookConverter
@@ -28,6 +29,9 @@ abstract class BookDao : BaseDao<Book>() {
 
     @Query("SELECT COUNT(*) FROM Book")
     abstract fun getCount(): Int
+
+    @Query("SELECT COUNT(*) FROM Book")
+    abstract fun getCountLiveData(): LiveData<Int>
 
     @Query("SELECT * FROM Book ORDER BY RANDOM() LIMIT :num")
     abstract fun getBooks(num : Int): List<Book>
