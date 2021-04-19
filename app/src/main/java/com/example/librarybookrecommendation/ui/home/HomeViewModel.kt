@@ -17,7 +17,7 @@ import java.net.URL
 class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = ""
     }
     val text: LiveData<String> = _text
     val bookList: MutableLiveData<List<Book>> = MutableLiveData()

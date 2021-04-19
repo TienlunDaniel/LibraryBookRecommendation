@@ -10,6 +10,8 @@ import androidx.room.Room
 import com.example.librarybookrecommendation.database.AppDatabase
 import com.example.librarybookrecommendation.service.BookDispatcherService
 import com.example.librarybookrecommendation.service.DownloadLibraryISBNService
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class LibraryBookApplication : Application() {
