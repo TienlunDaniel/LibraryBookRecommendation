@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         homeViewModel.bookDownloadedCount?.observe(viewLifecycleOwner, Observer {
-            textView.text = "以下載書籍數目: $it 本"
+            textView.text = "已下載書籍數目: $it 本"
         })
 
         val bookRefreshLayout = root.findViewById<SwipeRefreshLayout>(R.id.bookRefreshLayout)
